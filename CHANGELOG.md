@@ -25,3 +25,6 @@ Readme
 ## 1.0.4
 Change github link
 
+## 1.0.5
+Check permissions and get bool result
+

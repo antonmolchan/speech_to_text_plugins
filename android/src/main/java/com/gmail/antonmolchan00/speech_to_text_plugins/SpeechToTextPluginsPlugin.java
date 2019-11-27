@@ -132,7 +132,7 @@ public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegis
       if(results[0] == PackageManager.PERMISSION_GRANTED) {
         permissionResult.success(true);
       } else {
-        permissionResult.error("ERROR_NO_PERMISSION", "Audio permission are not granted", null);
+        permissionResult.success(false);
       }
       permissionResult = null;
       return true;

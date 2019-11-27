@@ -1,6 +1,6 @@
 name: speech_to_text_plugins
 description: Library for use android speech recognition for android. Now works only with android platform.
-version: 1.0.4
+version: 1.0.5
 author: Anton Molchan <antonmolchan00@gmail.com>
 homepage: https://github.com/antonmolchan/speech_to_text_plugins
 
