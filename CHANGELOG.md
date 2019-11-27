@@ -22,3 +22,6 @@ Readme
 ## 1.0.3
 Readme
 
+## 1.0.4
+Change github link
+
