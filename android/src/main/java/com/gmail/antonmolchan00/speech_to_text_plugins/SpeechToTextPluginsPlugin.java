@@ -70,14 +70,14 @@ public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegis
 
     @Override
     public void onError(int errorCode) {
-      speechResult.success(new ArrayList<String>());
+      returnResult(new ArrayList<String>());
     }
 
     @Override
     public void onResults(Bundle results) {
       ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
       if (matches != null) {
-        speechResult.success(matches);
+        returnResult(matches);
       }
     }
 
@@ -87,6 +87,12 @@ public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegis
     @Override
     public void onEvent(int eventType, Bundle params) {    }
   };
+
+  private void returnResult (ArrayList<String> matches) {
+    try {
+      speechResult.success(matches);
+    }catch (Exception ignored){}
+  }
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {

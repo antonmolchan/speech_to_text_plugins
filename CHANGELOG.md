@@ -28,3 +28,6 @@ Change github link
 ## 1.0.5
 Check permissions and get bool result
 
+## 1.0.6
+Try catch block for returned result, cant find better solution
+
