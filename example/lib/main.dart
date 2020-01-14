@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:speech_to_text_plugins/speech_to_text_plugins.dart';
 
@@ -14,6 +14,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
 
+  SpeechToTextPlugins speechToTextPlugins = SpeechToTextPlugins();
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +27,6 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      SpeechToTextPlugins speechToTextPlugins = SpeechToTextPlugins();
 //      speechToTextPlugins.activate().then((onValue) {
 //        print(onValue);
 //      });
@@ -54,8 +55,43 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+            child: Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('activate'),
+                onPressed: () {
+                  speechToTextPlugins.activate().then((onValue) {
+                    print(onValue);
+                  });
+                },
+              ),
+              RaisedButton(
+                child: Text('listen'),
+                onPressed: () {
+                  speechToTextPlugins.listen();
+                },
+              ),
+              RaisedButton(
+                child: Text('stop'),
+                onPressed: () {
+                  speechToTextPlugins.stop().then((onValue) {
+                    print(onValue);
+                  });
+                },
+              ),
+              RaisedButton(
+                child: Text('cancel'),
+                onPressed: () {
+                  speechToTextPlugins.cancel().then((onValue) {
+                    print(onValue);
+                  });
+                },
+              ),
+            ],
+          ),
+        )),
       ),
     );
   }
