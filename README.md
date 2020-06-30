@@ -8,6 +8,15 @@
    uses-permission android:name="android.permission.RECORD_AUDIO"
   permission to manifest 
   
+  return 
+  
+  enum PermissionResult {
+    GRANTED,
+    DENIED,
+    NEVER_ASK,
+  }
+
+  
 ```
     activate();
 ```

@@ -31,3 +31,6 @@ Check permissions and get bool result
 ## 1.0.6
 Try catch block for returned result, cant find better solution
 
+## 1.0.7
+Add enum for permissions
+

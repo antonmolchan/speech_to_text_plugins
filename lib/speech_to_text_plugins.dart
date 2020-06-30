@@ -16,8 +16,21 @@ class SpeechToTextPlugins {
   // in AndroidManifest file.
   // You need to use activate method every time when you start your app to initialize speechRecognition class in Android
   // ignore: missing_return
-  Future<bool> activate() {
-    /*if (Platform.isAndroid)*/ return _channel.invokeMethod("speech.activate");
+  Future<PermissionResult> activate() async {
+    if (Platform.isAndroid) {
+      switch (await _channel.invokeMethod("speech.activate")) {
+        case 11111:
+          return PermissionResult.GRANTED;
+          break;
+        case 22222:
+          return PermissionResult.DENIED;
+          break;
+        case 33333:
+          return PermissionResult.NEVER_ASK;
+          break;
+      }
+//      return _channel.invokeMethod("speech.activate");
+    }
   }
 
   // Listen method start listening your voice, and send result as List of Strings
@@ -45,4 +58,10 @@ class SpeechToTextPlugins {
   Future<List> stop() {
     /*if (Platform.isAndroid)*/ return _channel.invokeMethod("speech.stop");
   }
+}
+
+enum PermissionResult {
+  GRANTED,
+  DENIED,
+  NEVER_ASK,
 }

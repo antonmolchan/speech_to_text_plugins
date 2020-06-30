@@ -20,10 +20,16 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import static androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale;
+
 /** SpeechToTextPluginsPlugin */
 public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
 
   private static final int MY_PERMISSIONS_RECORD_AUDIO = 16669;
+
+  private static final int PERMISSIONS_GRANTED = 11111;
+  private static final int PERMISSIONS_DENIED = 22222;
+  private static final int PERMISSIONS_NEVER_ASK = 33333;
 
   private SpeechRecognizer recognizer;
   private MethodChannel speechChannel;
@@ -100,7 +106,7 @@ public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegis
       case "speech.activate":
 
         if (activity.checkCallingOrSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-          result.success(true);
+          result.success(PERMISSIONS_GRANTED);
         } else {
           permissionResult = result;
           ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
@@ -134,15 +140,23 @@ public class SpeechToTextPluginsPlugin implements MethodCallHandler, PluginRegis
 
   @Override
   public boolean onRequestPermissionsResult(int code, String[] permissions, int[] results) {
-    if (code == MY_PERMISSIONS_RECORD_AUDIO) {
-      if(results[0] == PackageManager.PERMISSION_GRANTED) {
-        permissionResult.success(true);
-      } else {
-        permissionResult.success(false);
+    try {
+      if (code == MY_PERMISSIONS_RECORD_AUDIO) {
+        if(results[0] == PackageManager.PERMISSION_GRANTED) {
+          permissionResult.success(PERMISSIONS_GRANTED);
+        } else {
+          boolean showRationale = shouldShowRequestPermissionRationale(activity, Manifest.permission.RECORD_AUDIO);
+          if (!showRationale) {
+            permissionResult.success(PERMISSIONS_NEVER_ASK);
+          } else {
+            permissionResult.success(PERMISSIONS_DENIED);
+          }
+        }
       }
-      permissionResult = null;
-      return true;
+    } catch (Exception e) {
+      permissionResult.success(PERMISSIONS_DENIED);
     }
+
     return false;
   }
 
