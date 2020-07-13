@@ -36,15 +36,14 @@ class SpeechToTextPlugins {
   // Listen method start listening your voice, and send result as List of Strings
   // ignore: missing_return
   Future<List> listen() {
-    if (Platform.isAndroid)
-      return _channel.invokeMethod("speech.listen");
-    else if (Platform.isIOS) _channel.invokeMethod("speech.listen");
+    if (Platform.isAndroid) return _channel.invokeMethod("speech.listen");
+//    else if (Platform.isIOS) _channel.invokeMethod("speech.listen");
   }
 
   // When you call cancel, recognition canceled
   // ignore: missing_return
   Future cancel() {
-    /*if (Platform.isAndroid)*/ return _channel.invokeMethod("speech.cancel");
+    if (Platform.isAndroid) return _channel.invokeMethod("speech.cancel");
   }
 
   // Call when you need to stop speechRecognition and destroy it
@@ -56,7 +55,7 @@ class SpeechToTextPlugins {
   // When you call stop, recognition stopped and send result as List of String
   // ignore: missing_return
   Future<List> stop() {
-    /*if (Platform.isAndroid)*/ return _channel.invokeMethod("speech.stop");
+    if (Platform.isAndroid) return _channel.invokeMethod("speech.stop");
   }
 }
 

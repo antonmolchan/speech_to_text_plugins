@@ -34,3 +34,6 @@ Try catch block for returned result, cant find better solution
 ## 1.0.7
 Add enum for permissions
 
+## 1.0.8
+Fix crash on starrt IOS
+
